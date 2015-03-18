@@ -1,0 +1,11 @@
+%h2 Courses
+= link_to 'New Course', new_admin_course_path
+%br/
+%br/
+%span{style: 'display: inline-block;'}
+	= link_to "<button>Activate All</button>".html_safe, activate_all_admin_courses_path, method: :post, class: 'activate_all'
+	= link_to "<button>Deactivate All</button>".html_safe, deactivate_all_admin_courses_path, method: :post, class: 'deactivate_all'
+%br
+%br
+= render :partial => 'list', :locals => {:courses => courses}
+

@@ -1,0 +1,127 @@
+<h1><p class="text-center"><%= @department.name %></p></h1>
+<p class="text-center"><%=raw @department.description %></p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <h4>You have already taken:</h4>
+        </div>
+        <br/>
+        <div class="col-md-8">
+            <% sorted_coursed = {} %>
+            <% course_show_none = true %>
+            <% our_courses = User.sorted_taken_courses(user, @department) %>
+            <% puts "What is in our courses : #{our_courses.inspect}" %>
+            <% User.sorted_taken_courses(user, @department).each do |key, t_course| %>
+                <%= puts ">>>>> what is t_course : #{t_course.inspect}" %>
+                <% unless t_course.department.blank? %>
+                    <% if @department.id == t_course.department.id %>
+                        <% course_show_none = false %>
+                        <%= t_course.name %> (<%= t_course.code %>)<br/>
+                    <% end %>
+                <% end %>
+            <% end %>
+                
+            <% if course_show_none %>
+                None
+            <% end %>
+            
+        </div>
+    </div>
+    <br/>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Your recommended course(s).</h4>
+            <p>Select course(s) below to add to your course requests:</p>
+        </div>
+        <br/>
+        <div class="col-md-8">
+            <% recommended_show_none = true %>
+            <% User.sorted_recommended_courses(user, @department).each do |key, recommended_course| %>
+                <% unless recommended_course.course.department.blank? %>
+                    <% if @department.id == recommended_course.course.department.id %>
+                        <% unless recommended_course.selected %>
+                            <% if recommended_course.course.active %>
+                                <% recommended_show_none = false %>
+                                <%= link_to recommended_course.course.name, student_add_current_course_admin_students_path(student_id: user.id, course_to_add: recommended_course.course.id, return_id: params[:id]), method: :post %>
+                                 (<%= recommended_course.course.code %>)<br/>
+                            <% end %>                            
+                        <% end %>                            
+                    <% end %>
+                <% end %>
+            <% end %>
+            
+            <% if recommended_show_none %>
+                None
+            <% end %>
+        </div>
+    </div>
+    <br/>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Courses Offered</h4>
+            <% if @department.name == 'Electives' %>
+                <p>
+                    Select at least <strong>10 elective classes</strong>.
+                </p>
+            <% else %>
+                <p>Select desired course(s).
+                If it is an Honors or AP course, and you have been recommended, it will appear as a course request.
+                If you have not been recommended, it will appear as a course under the “I Intend to Appeal For” section.</p>
+            <% end %>
+        </div>
+        <br/>
+        <div class="col-md-8">
+            <% offered_show_none = true %>
+            <% User.sorted_offered_courses(user, @department).each do |key, course| %>
+                <% if course.active %>
+                    <% unless course.department.blank? %>
+                        <% if @department.id == course.department.id %>
+                            <% if !user.users_current_courses.include?(course) %>
+                                <% unless user.users_appeal_courses.include?(course) || user.users_recommended_course.include?(course) %>
+                                    <% if user.users_recommended_course.include?(course.main_course) || course.main_course.nil? %>
+                                        <% offered_show_none = false %>
+                                        <%= link_to course.name, student_add_current_course_admin_students_path(student_id: user.id, course_to_add: course.id, return_id: params[:id], recommended: false), method: :post %> (<%= course.code %>)<br/>
+                                    <% else %>
+                                        <% offered_show_none = false %>
+                                        <%= link_to course.name, student_add_other_course_admin_students_path(user_id: user.id, course_id: course.id, return_id: params[:id]), method: :post %> (<%= course.code %>)<br/>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+            
+            <% if offered_show_none %>
+                None
+            <% end %>
+        </div>
+    </div>   
+    
+    <br/>
+    <br/>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Note</h4>
+            Notes may include:<br/>
+            <ul>
+                <li>a request for a course not listed above</li>
+                <li>an order of preference</li>
+                <li>or any question or comment about the courses selected</li>
+            </ul>
+        </div>    
+        <div class="col-md-8">
+            <%= form_tag( student_add_appeal_admin_students_path ) do  %>
+                <%= hidden_field_tag 'user_id', current_user.id %>
+                <%= hidden_field_tag 'department_id', @department.id %>
+                <%= hidden_field_tag 'return_id', params[:id] %>
+                <%= text_area_tag :comment, @comment, rows: 4, cols: 55 %>
+                <br/>
+                <%= submit_tag "Save Note", class: "btn btn-small btn-primary" %>
+            <% end %>
+        </div>
+    </div>
+</div>

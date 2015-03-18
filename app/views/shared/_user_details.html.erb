@@ -1,0 +1,13 @@
+<div class="well sidebar-nav">
+	<% if current_user.is_student? %>
+    <ul class="nav nav-list">
+      <li class="nav-header">Student Details</li>
+      <li><b>Export ID: </b><%= current_user.export_id  %></li>
+      <li><b>Name: </b><%= current_user.name  %></li>
+      <li><b>Email: </b><%= mail_to current_user.email %></li>
+      <li><b>Current Grade: </b><%= current_user.current_grade.description rescue ''  %></li>
+      <li><b>Next Grade: </b><%= current_user.next_grade.description rescue ''  %></li>
+      <li><b>Last Sign In: </b><%= current_user.last_sign_in_at.to_s(:long)  %></li>
+    </ul>
+  <% end %>
+</div><!--/.well -->

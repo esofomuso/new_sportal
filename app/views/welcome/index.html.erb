@@ -1,0 +1,12 @@
+<%= render 'shared/left_sidebar' %>
+<% if @department %>
+	<div class="span6">
+		<%= render 'student_view' %>
+	</div>
+	<%= render 'shared/right_sidebar' %>
+<% else %>
+	<div class="span9">
+		<%= render 'welcome' %>
+	</div>
+<% end %>
+

@@ -1,0 +1,19 @@
+%h2 Admin Users
+= link_to 'New Admin User', new_admin_admin_path
+%br/
+%br/
+%table{:id => 'admins'}
+  %thead
+    %tr
+      %th ID
+      %th First Name
+      %th Last Name
+      %th Actions
+  %tbody
+    - admins.each do |admin|
+      %tr
+        %td= link_to admin.export_id, edit_admin_admin_path(admin)
+        %td= admin.first_name
+        %td= admin.last_name
+        %td
+          = link_to 'Delete', admin_admin_path(admin), method: :delete, data: { confirm: 'Are you sure?' }

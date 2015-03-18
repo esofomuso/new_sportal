@@ -1,0 +1,33 @@
+- if (teacher = (teacher || @teacher)) && teacher.errors.any?
+  #error_explanation
+    %h4
+      = pluralize(teacher.errors.count, "error")
+      prohibited this teacher from being saved:
+    %ul
+      - teacher.errors.full_messages.each do |msg|
+        %li= msg
+%table
+  %tr
+    %th= f.label :email
+    %td= f.text_field :email
+    %th= f.label :first_name
+    %td= f.text_field :first_name
+  %tr
+    %th= f.label :last_name
+    %td= f.text_field :last_name
+    %th= f.label :preferred_name
+    %td= f.text_field :preferred_name
+  %tr
+    %th= f.label :current_grade
+    %td= f.select :current_grade_id, ['',''] + grades.collect {|x| [x.name, x.id]},{}, :multiple => false
+    %th= f.label :next_grade
+    %td= f.select :next_grade_id, ['',''] + grades.collect {|x| [x.name, x.id]},{}, :multiple => false
+  %tr
+    %th= f.label :Active
+    %td= f.check_box :active
+    %th= f.label :can_update
+    %td= f.check_box :can_update
+  %tr
+    %td{:colspan => 4}
+      .actions
+      = f.submit 'Save teacher'

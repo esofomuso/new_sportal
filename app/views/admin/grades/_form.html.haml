@@ -1,0 +1,19 @@
+- if @grade.errors.any?
+  #error_explanation
+    %h4
+      = pluralize(@grade.errors.count, "error")
+      prohibited this grade from being saved:
+    %ul
+      - @grade.errors.full_messages.each do |msg|
+        %li= msg
+%table
+  %tr
+    %th= f.label :name
+    %td= f.text_field :name
+  %tr
+    %th= f.label :description
+    %td= f.text_field :description
+  %tr
+    %th{:colspan => 2}
+      .actions
+        = f.submit 'Save Grade'

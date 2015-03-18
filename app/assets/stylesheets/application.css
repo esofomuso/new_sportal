@@ -1,0 +1,68 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require jquery-min.css
+ *= require dataTables/jquery.dataTables 
+ *= require_tree .
+ */
+ 
+
+#error_explanation {
+	font-family:Arial, Helvetica, sans-serif;
+	color:red;
+	font-size:13px;	
+}
+
+hr.summary {
+	border-color: #0e5879;
+	margin:20px 40px;
+	border-top:1px solid #0e5879;
+	border-bottom:1px solid #0e5879;
+}
+
+#summary table tr td {
+	border: 0;
+	/*margin:20px 10px;*/
+	font-size: 14px;
+}
+
+#summary h5 {
+	color: #2487b4;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 16px;
+}
+
+#summary h6 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 16px;
+	margin: 0;
+}
+
+ul .boxed li{
+	border: 1px solid black;
+	padding-left: 2em; 
+	list-style-type: none;
+}
+
+.tdboxed{
+	border: 1px solid black;
+	padding-left: 2em; 
+	text-align: left;
+	margin-left: 20px;
+}
+
+ol .boxed li{
+	border: 1px solid black;
+	padding-left: 2em; 
+	text-align: left;
+}

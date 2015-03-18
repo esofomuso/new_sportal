@@ -1,0 +1,42 @@
+= render 'shared/left_sidebar'
+.span9
+	= bootstrap_flash
+	= form_for(current_user, :url => update_user_path, :method => :post, :html => { :class => 'formhorizontal' } ) do |f|
+		%fieldset
+			%h3
+				Edit Your Personal Details
+			%br
+			- if (current_user = (current_user || @current_user)) && current_user.errors.any?
+				#error_explanation
+					%h4
+						= pluralize(current_user.errors.count, "error")
+						prohibited this current_user from being saved:
+					%ul
+						- current_user.errors.full_messages.each do |msg|
+							%li= msg
+			%table
+				%tr
+					%th= f.label "Export ID"
+					%td= f.text_field :export_id
+					%th= f.label :first_name
+					%td= f.text_field :first_name
+				%tr
+					%th= f.label :last_name
+					%td= f.text_field :last_name
+					%th= f.label :preferred_name
+					%td= f.text_field :preferred_name
+				%tr
+					%th= f.label :full_name
+					%td= f.text_field :full_name
+					%th= f.label :email
+					%td= f.text_field :email
+				%tr
+					%th= f.label :current_grade
+					%td= user.current_grade.description rescue ''
+					%th= f.label :next_grade
+					%td= user.next_grade.description rescue ''
+				%tr
+					%td{:colspan => 4}
+						.actions
+						= f.submit('Save', :class => "btn btnprimary")
+						= link_to('Cancel', '/', :class => "btn")

@@ -1,0 +1,15 @@
+- clazz = clazz || 'courses'
+%table{:id => clazz}
+  %thead
+    %tr
+      %th Name
+      %th Department
+      %th Grade
+      %th Active
+  %tbody
+    - courses.each do |course|
+      %tr
+        %td= course.name
+        %td= course.department.code rescue ''
+        %td= course.grade.name rescue ''
+        %td= course.active

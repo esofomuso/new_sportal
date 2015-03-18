@@ -1,0 +1,28 @@
+
+<div class="span3 well sidebar-nav pull-right">
+  <h3><p class="">Course Requests</p></h3>
+  <p>Select at least <strong>10 elective classes</strong>.<br/>
+  Click on course title to remove. <br/>
+  Click on Up and Down arrows to indicate order of preference, if it exists.</p>
+  <% @current_courses.each do |current_course| %>
+    <% if current_course.course.active %>
+      <%= link_to image_tag("up.png", size: '16x16'), move_course_request_up_admin_students_path(current_course: current_course, return_id: params[:id]), method: :post %>
+      <%= link_to current_course.course.name, student_remove_current_course_admin_students_path(student_id: user.id, course_to_remove: current_course.course.id, return_id: params[:id]), method: :post %>
+      <%= link_to image_tag("down.png", size: '16x16'), move_course_request_down_admin_students_path(current_course: current_course, return_id: params[:id]), method: :post %>
+      <br/>
+    <% end %>
+
+  <% end %>
+</div><!--/.well -->
+    
+<div class="span3 well sidebar-nav pull-right">
+  <h3><p class="">I Intend to Appeal For</p></h3>
+  <h5>Click to remove from the list.</h5>
+  <p></p>Complete  <a href="https://sdsw.myschoolapp.com/app/Parent#resourceboarddetail/861" target=_blank>Appeal Form</a>
+and return to the Registrar by April 14, 2015</p>
+  <% user.users_appeal_courses.each do |current_course| %>
+    <% if current_course.active %>
+      <%= link_to current_course.name, student_remove_other_course_admin_students_path(user_id: user.id, course_id: current_course.id, return_id: params[:id]), method: :post %><br/>
+    <% end %>
+  <% end %>      
+</div><!--/.well -->     

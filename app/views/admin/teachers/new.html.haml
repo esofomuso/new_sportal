@@ -1,0 +1,5 @@
+%h2 New Teacher
+= link_to 'Back', admin_teachers_path
+= form_for(:user, url: admin_teachers_path) do |f|
+	= render :partial => 'form', :locals => {:f => f}
+

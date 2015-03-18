@@ -1,0 +1,13 @@
+ <div class="span3">
+    <div class="well sidebar-nav">
+      <ul class="nav nav-pills nav-stacked">
+        <li class="presentation"></li>
+          <% departments.each_with_index do |dept,index| %>
+            <%= content_tag(:li) do %>
+              <%= link_to(dept.name, root_url(id: dept.id), class: 'lead') %>
+            <% end %>
+          <% end %>
+      </ul>
+    </div><!--/.well -->
+    <%= render :partial => '/shared/user_details' %>    
+</div><!--/span-->

@@ -1,0 +1,6 @@
+%h2 Electives
+= link_to 'New Elective', new_admin_elective_path
+%br/
+%br/
+= render :partial => 'list', :locals => {:electives => electives}
+

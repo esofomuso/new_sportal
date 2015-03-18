@@ -1,0 +1,4 @@
+%h2 Editing grade
+= form_for(@grade, url: admin_grade_path(@grade)) do |f|
+  = render :partial => 'form', :locals => {:f => f}
+\#{link_to 'Back', admin_grades_path}

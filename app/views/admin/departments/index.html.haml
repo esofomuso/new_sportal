@@ -1,0 +1,21 @@
+%h2 Departments
+= link_to 'New Department', new_admin_department_path
+%br/
+%br/
+%table{:id => 'departments'}
+  %thead
+    %tr
+      %th ID
+      %th Name
+      %th Code
+      %th Description
+      %th Actions
+  %tbody
+    - departments.each do |dept|
+      %tr
+        %td= dept.id
+        %td= link_to dept.name, edit_admin_department_path(dept)
+        %td= dept.code
+        %td= excerpt(dept.description, '', radius: 100)
+        %td
+          = link_to 'Delete', admin_department_path(dept), method: :delete, data: { confirm: 'Are you sure?' }

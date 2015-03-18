@@ -1,0 +1,20 @@
+.navbar.navbar-fluid-top
+  .navbar-inner
+    .container-fluid
+      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.brand{href: "#"} Course Registration
+      .container-fluid.nav-collapse
+        %ul.nav
+          %li= link_to "Home", root_path
+          %li= link_to "Course Registration Summary", "/summary"
+          // %li= link_to "Course Registration Summary PDF", "/summary.pdf"
+        %div{:style => 'text-align:right;'}
+          = link_to current_user.email, root_path rescue ''
+          | 
+          = link_to "logout", "/users/sign_out"  unless current_user.blank?
+          | 
+          = link_to "login", "/users/sign_in"  if current_user.blank?
+      / /.nav-collapse

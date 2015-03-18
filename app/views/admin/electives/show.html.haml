@@ -1,0 +1,19 @@
+%p#notice= notice
+%h3
+  = elective.name
+  Details.
+%table
+  %tr
+    %th Name
+    %td= elective.name
+    %th Code
+    %td= elective.code
+  %tr
+  %tr
+	%th Description
+	%td{:colspan => 3}= elective.description
+    %th Grade
+    %td= elective.grade.name rescue ''
+= link_to 'Edit', edit_admin_elective_path(elective)
+|
+\#{link_to 'Back', admin_electives_path}

@@ -1,0 +1,39 @@
+- if (student = (student || @student)) && student.errors.any?
+  #error_explanation
+    %h4
+      = pluralize(student.errors.count, "error")
+      prohibited this student from being saved:
+    %ul
+      - student.errors.full_messages.each do |msg|
+        %li= msg
+%table
+  %tr
+    %th= f.label "Export ID"
+    %td= f.text_field :export_id
+    %th= f.label :first_name
+    %td= f.text_field :first_name
+  %tr
+    %th= f.label :last_name
+    %td= f.text_field :last_name
+    %th= f.label :preferred_name
+    %td= f.text_field :preferred_name
+  %tr
+    %th= f.label :email
+    %td= f.text_field :email
+    %th= f.label :current_grade
+    %td= f.select :current_grade_id, ['',''] + grades.collect {|x| [x.name, x.id]},{}, :multiple => false
+  %tr
+    %th= f.label :next_grade
+    %td= f.select :next_grade_id, ['',''] + grades.collect {|x| [x.name, x.id]},{}, :multiple => false
+    %th= f.label :Active
+    %td= f.check_box :active
+  %tr
+    %th= f.label :Registrar_Note
+    %td{ :colspan => 3}= f.text_area(:registrar_notes, size: '50x5')
+  %tr
+    %th= f.label :can_update
+    %td= f.check_box :can_update
+    %td{:colspan => 2}
+      .actions
+      = f.submit 'Save student'
+ 

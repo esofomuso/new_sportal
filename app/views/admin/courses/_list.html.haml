@@ -1,0 +1,26 @@
+- clazz = clazz || 'courses'
+%table{:id => clazz}
+	%thead
+		%tr
+			%th ID
+			%th Name
+			%th Department
+			%th Grade
+			%th Offered this Year
+			%th Actions
+	%tbody
+		- courses.each do |course|
+			%tr
+				%td= course.id
+				%td= link_to course.name, edit_admin_course_path(course)
+				- dept = course.department.code rescue ''
+				%td= link_to dept, admin_department_path(course.department) rescue ''
+				%td= course.grade.name rescue ''
+				%td= course.active
+				%td
+					- if course.active?
+						= link_to 'Deactivate', deactivate_admin_course_path(course)
+					- else
+						= link_to 'Activate', activate_admin_course_path(course)
+					|
+					= link_to 'Delete', admin_course_path(course), method: :delete, data: { confirm: 'Are you sure?' }

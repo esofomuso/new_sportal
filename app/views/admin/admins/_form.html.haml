@@ -1,0 +1,28 @@
+- if (admin = (admin || @admin)) && admin.errors.any?
+  #error_explanation
+    %h4
+      = pluralize(admin.errors.count, "error")
+      prohibited this admin from being saved:
+    %ul
+      - admin.errors.full_messages.each do |msg|
+        %li= msg
+%table{ id: 'admins'}
+  %tr
+    %th= f.label :email
+    %td= f.text_field :email
+    %th= f.label :first_name
+    %td= f.text_field :first_name
+  %tr
+    %th= f.label :last_name
+    %td= f.text_field :last_name
+    %th= f.label :preferred_name
+    %td= f.text_field :preferred_name
+  %tr
+    %th= f.label :can_update
+    %td= f.check_box :can_update
+    %th= f.label :Active
+    %td= f.check_box :active
+  %tr
+    %td{:colspan => 4}
+      .actions
+      = f.submit 'Save admin'

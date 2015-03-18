@@ -1,0 +1,73 @@
+.span7
+	%h2{ style: 'text-align: center;' }
+		Course Registration Summary 
+		%br
+		2015 - 2016
+	%hr{ class: 'summary', width: '85%' }
+	%br
+	#summary
+		%table{ width: '90%' }
+			%tr{ colspan: 2}
+				All appeals to course recommendations noted here MUST be accompanied by an <a href="https://sdsw.myschoolapp.com/app/Parent#resourceboarddetail/861" target=_blank>Appeal Form</a> This must be returned to the Registrar, Helen Keegan, by April 14th While every effort is made to honor student preferences, all courses are offered contingent on the availability of faculty, and a minimum number of students. The school reserves the right to modify the list of courses offered. Course descriptions, pre-requisites and graduation requirements are available in the Curriculum Guides on the website.
+			%tr{ style: 'border: 0;margin:20px 10px;'}
+				%td{ width: '30%' }
+					%h4
+						= "#{user.last_name}, #{user.first_name}"
+				%td{ width: '30%' }
+					%h4
+						= " Grade: #{user.next_grade.name}"
+				%td{ width: '30%' }
+					%h4
+						= user.export_id
+		%br
+		%table{ width: '90%' }
+			%tr
+				%td{ width: '45%' }
+					%h5
+						Course Requests
+				%td{ width: '45%' }
+					%h5
+						Elective Course Requests
+			%tr
+				%td{ width: '45%' }
+					%ul
+						- current_courses.map{|cc| cc[1]}.flatten.each do |course|
+							- if course.department.name != 'Electives'
+								.boxed
+									%li= course.name
+									%br			
+				%td{ width: '45%'}
+					%ul
+						- current_courses.map{|cc| cc[1]}.flatten.each do |course|
+							- if course.department.name == 'Electives'
+								.boxed
+									%li= course.name
+									%br			
+			%tr
+				%td{ width: '45%' }
+					%h6
+						Intent to appeal: </br>
+					<p>
+					Click to remove from the list.
+					Complete Appeal Form 
+					%a{:href => "https://sdsw.myschoolapp.com/app/Parent#resourceboarddetail/861", :target => "_blank"} Appeal Form
+					and return to the Registrar by April 14, 2015
+					</p>
+				%td{ width: '45%' }
+					%h6
+						Notes from student:
+			%tr
+				%td{ width: '45%' }
+					%ul
+						- appeal_courses.map{|cc| cc[1]}.flatten.each do |course|
+							.boxed
+								%li= course.name
+							%br	
+				%td{ width: '45%' }
+					.tdboxed
+						- student_appeals.each do |appeal|
+							.boxed
+								- unless appeal.comment.blank?
+									= " #{appeal.department.name} - #{appeal.comment}"
+			
+%br

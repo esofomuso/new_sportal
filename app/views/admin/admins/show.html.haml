@@ -1,0 +1,23 @@
+%p#notice= notice
+%h2 
+  Details for
+  = admin.name
+%table
+  %tr
+    %th Export ID
+    %td= admin.export_id
+    %th First Name
+    %td= admin.first_name
+  %tr
+    %th Last Name
+    %td= admin.last_name
+    %th Preferred Name
+    %td= admin.preferred_name
+  %tr
+    %th Email
+    %td= admin.email
+    %th Active
+    %td= admin.active
+= link_to 'Edit', edit_admin_admin_path(admin)
+|
+\#{link_to 'Back', admin_admins_path}

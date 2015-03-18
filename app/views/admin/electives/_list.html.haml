@@ -1,0 +1,17 @@
+- clazz = clazz || 'electives'
+%table{:id => clazz}
+  %thead
+    %tr
+      %th Name
+      %th Grade
+      %th Active
+      %th Actions
+  %tbody
+    - electives.each do |elective|
+      %tr
+        %td= link_to elective.name, edit_admin_elective_path(elective)
+        - dept = elective.department.code rescue ''
+        %td= elective.grade.name rescue ''
+        %td= elective.active
+        %td
+          = link_to 'Delete', admin_elective_path(elective), method: :delete, data: { confirm: 'Are you sure?' }

@@ -1,0 +1,19 @@
+%h2 Teachers
+= link_to 'New Teacher', new_admin_teacher_path
+%br/
+%br/
+%table{:id => 'teachers'}
+  %thead
+    %tr
+      %th ID
+      %th First Name
+      %th Last Name
+      %th Actions
+  %tbody
+    - teachers.each do |teacher|
+      %tr
+        %td= link_to teacher.export_id, edit_admin_teacher_path(teacher)
+        %td= teacher.first_name
+        %td= teacher.last_name
+        %td
+          = link_to 'Delete', admin_teacher_path(teacher), method: :delete, data: { confirm: 'Are you sure?' }

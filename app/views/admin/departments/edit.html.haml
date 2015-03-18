@@ -1,0 +1,4 @@
+%h2 Edit department
+= form_for(department, url: admin_department_path(department)) do |f|
+	= render :partial => 'form', :locals => {:f => f}
+\#{link_to 'Back', admin_departments_path}

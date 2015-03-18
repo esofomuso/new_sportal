@@ -1,0 +1,14 @@
+%h2 Students
+= link_to 'New Student', new_admin_student_path
+%br/
+%br/
+= form_for(:student_ids, url: update_selected_admin_students_path, method: :post) do |f|
+	= render :partial => 'list', :locals => {students: students, f: f}
+	%br/
+	%br/
+	%span{style: 'display: inline-block;'}
+		= submit_tag "Activate Selected", activate: true, class: 'activate_all'
+		= submit_tag "Deactivate Selected", activate: false, class: 'deactivate_all'
+%span{style: 'display: inline-block;'}
+	= link_to "<button>Activate All</button>".html_safe, activate_all_admin_students_path, method: :post, class: 'activate_all'
+	= link_to "<button>Deactivate All</button>".html_safe, deactivate_all_admin_students_path, method: :post, class: 'deactivate_all'

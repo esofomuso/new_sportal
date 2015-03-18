@@ -1,0 +1,21 @@
+- clazz = clazz || 'courses'
+%table{:id => clazz}
+  %thead
+    %tr
+      %th Name
+      %th Department
+      %th Grade
+      %th Active
+      %th Actions
+  %tbody
+    - courses.each do |course|
+      %tr
+        %td= course.name
+        %td= course.department.code rescue ''
+        %td= course.grade.name rescue ''
+        %td= course.active
+        %td
+          = form_tag(remove_current_course_admin_students_path) do |prev|       
+            = hidden_field_tag 'student_id', student.id 
+            = hidden_field_tag 'course_id', course.id
+            = submit_tag "Delete", class: 'btn btn-danger'

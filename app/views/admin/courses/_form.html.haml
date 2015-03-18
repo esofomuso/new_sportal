@@ -1,0 +1,33 @@
+- if (course = (course || @course)) && course.errors.any?
+  #error_explanation
+    %h4
+      = pluralize(course.errors.count, "error")
+      prohibited this course from being saved:
+    %ul
+      - course.errors.full_messages.each do |msg|
+        %li= msg
+%table
+  %tr
+    %th= f.label :name
+    %td= f.text_field :name
+    %th= f.label :code
+    %td= f.text_field :code
+  %tr
+    %th= f.label :Grade
+    %td= f.select :grade_id, ['',''] + grades.collect {|x| [x.name, x.id]}, :multiple => false
+    %th= f.label :Department
+    %td= f.select :department_id, ['',''] + departments.collect {|x| [x.name, x.id]}, :multiple => false
+  %tr
+    %th= f.label :description
+    %td= f.text_area :description
+    %th= f.label :main_course
+    %td= f.select :main_course_id, ['',''] + @courses_by_grade.collect {|x| [x.name, x.id]}, :multiple => false
+  %tr
+    %th= f.label "Offered this year"
+    %td
+      = f.check_box :active
+    %th{:colspan => 2}
+      .actions
+      = f.submit 'Save Course'
+      
+  = @course.inspect

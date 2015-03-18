@@ -1,0 +1,80 @@
+%h2 Edit student
+= form_for(student, url: admin_student_path(student)) do |f|
+    = render :partial => 'form', :locals => {:f => f}
+
+%ul.nav.nav-tabs{:id => "myTab"}
+    %li.active
+        %a{"data-toggle" => "tab", :href => "#sectionA"} Courses Offered
+    %li
+        %a{"data-toggle" => "tab", :href => "#sectionB"} Courses Taken
+    %li
+        %a{"data-toggle" => "tab", :href => "#sectionC"} Recommended Courses
+
+
+.tab-content
+    #sectionA.tab-pane.fade.in.active
+        = student.possessive_name
+        Courses Offered:
+        = render :partial => 'new_current_courses', :locals => {:courses => @offered_courses, :student => student, :clazz => 'r1courses'}
+    
+    #sectionB.tab-pane.fade
+        = student.possessive_name
+        Taken Courses:
+        = render :partial => 'taken_courses', :locals => {:courses => student.t_courses, :clazz => 'tcourses'}
+
+        %button.btn.btn-success.btn-lg{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}
+            Add Previously Taken Course        
+    #sectionC.tab-pane.fade
+        = student.possessive_name
+        Recommended Courses:
+        = render :partial => 'recommended_courses', :locals => {:courses => student.r_courses, :student => student, :clazz => 'ccourses'}
+
+        %button.btn.btn-success.btn-lg{"data-target" => "#recommended", "data-toggle" => "modal", :type => "button"}
+            Add Recommended Course    
+
+
+/ Modal
+#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+        .modal-content
+            .modal-header
+                %h4#myModalLabel.modal-title Add Previously Taken Course
+            = form_tag(add_previous_course_admin_students_path) do |prev|                
+                .modal-body
+                    = hidden_field_tag 'student_id', student.id 
+                    Please select the course that this student has previously completed.
+                    = select_tag :course_to_add, options_from_collection_for_select(@courses, "id", "name"), :multiple => false
+                .modal-footer
+                    %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+                    = submit_tag "Add previously taken course", class: 'btn btn-primary'
+
+/ Modal
+#recommended.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+        .modal-content
+            .modal-header
+                %h4#recommendedLabel.modal-title Add Recommended Course
+            = form_tag(add_recommended_course_admin_students_path) do |prev|                
+                .modal-body
+                    = hidden_field_tag 'student_id', student.id 
+                    Please select the course that is recommended for this student.
+                    = select_tag :course_to_add, options_from_collection_for_select(@offered_courses, "id", "name"), :multiple => false
+                .modal-footer
+                    %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+                    = submit_tag "Add Recommended Course", class: 'btn btn-primary'
+
+/ Modal
+#current.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+        .modal-content
+            .modal-header
+                %h4#currentLabel.modal-title Add Recommended Course
+            = form_tag(add_current_course_admin_students_path) do |prev|                
+                .modal-body
+                    = hidden_field_tag 'student_id', student.id 
+                    Please select the course that you would like to add for this student.
+                    = select_tag :course_to_add, options_from_collection_for_select(@courses, "id", "name"), :multiple => false
+                .modal-footer
+                    %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+                    = submit_tag "Add Current Course", class: 'btn btn-primary'
+
